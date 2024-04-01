@@ -68,7 +68,23 @@ namespace Microsoft.Diagnostics.Monitoring.WebApi.ParameterCapturing
                     {
                         builder.Append("ref ");
                     }
-                    builder.AppendLine($"{GetValueOrUnknown(parameter.Name)}: {GetValueOrUnknown(parameter.Value)}");
+                    builder.Append($"{GetValueOrUnknown(parameter.Name)}: ");
+                    if (parameter.EvalFailReason == EvaluationFailureReason.None)
+                    {
+                        builder.AppendLine(GetValueOrUnknown(parameter.Value));
+                    }
+                    else if (parameter.EvalFailReason == EvaluationFailureReason.HasSideEffects)
+                    {
+                        builder.AppendLine("<evaluation not performed (has side effects)>");
+                    }
+                    else if (parameter.EvalFailReason == EvaluationFailureReason.NotSupported)
+                    {
+                        builder.AppendLine("<evaluation is not supported>");
+                    }
+                    else if (parameter.EvalFailReason == EvaluationFailureReason.Unknown)
+                    {
+                        builder.AppendLine("<evaluation failed>");
+                    }
                 }
 
                 builder.AppendLine($"{Indent})");
@@ -105,6 +121,8 @@ namespace Microsoft.Diagnostics.Monitoring.WebApi.ParameterCapturing
                         Type = param.Type,
                         TypeModuleName = param.TypeModuleName,
                         Value = param.Value,
+                        EvalFailReason = param.EvalFailReason,
+                        IsNull = param.IsNull,
                         IsInParameter = param.IsIn,
                         IsOutParameter = param.IsOut,
                         IsByRefParameter = param.IsByRef

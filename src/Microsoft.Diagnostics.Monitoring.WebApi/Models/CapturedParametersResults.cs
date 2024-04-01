@@ -22,6 +22,14 @@ namespace Microsoft.Diagnostics.Monitoring.WebApi.Models
         [JsonPropertyName("value")]
         public string Value { get; set; }
 
+        [JsonPropertyName("evalFailReason")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public EvaluationFailureReason EvalFailReason { get; set; }
+
+        [JsonPropertyName("isNull")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public bool IsNull { get; set; }
+
         [JsonPropertyName("isIn")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public bool IsInParameter { get; set; }
@@ -33,6 +41,15 @@ namespace Microsoft.Diagnostics.Monitoring.WebApi.Models
         [JsonPropertyName("isByRef")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public bool IsByRefParameter { get; set; }
+    }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum EvaluationFailureReason
+    {
+        None = 0,
+        NotSupported = 1,
+        HasSideEffects = 2,
+        Unknown = 3
     }
 
     public class CapturedMethod

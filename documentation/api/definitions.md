@@ -116,6 +116,8 @@ Object describing a captured parameter.
 | `value` | string | The parameter value. |
 | `type` | string | The parameter type name. |
 | `module` | string | The parameter type module name. |
+| `evalFailReason` | string | The reason why evaluation failed. If missing the evaluation was successful. |
+| `isNull` | bool | Whether the evaluated parameter is null (value is omitted if false). |
 | `isIn` | bool | Whether the parameter has the [`in` modifier](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters#in-parameter-modifier). If missing, its value is `false`. |
 | `isOut` | bool | Whether the parameter has the [`out` modifier](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters#out-parameter-modifier). If missing, its value is `false`. |
 | `isByRef` | bool | Whether the parameter has the [`ref` modifier](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters#ref-parameter-modifier). If missing, its value is `false`. |
